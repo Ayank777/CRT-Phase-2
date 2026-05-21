@@ -1,0 +1,31 @@
+Layered architecture of Application
+user
+Frontent layer
+api communication layer
+controller layer
+service layer
+repository layer
+database layer
+
+Frontend layer
+it handles the entire UI
+
+Technology
+JS
+HTML
+CSS
+ReactJS
+Tailwind
+Bootstrap
+JFX
+
+API communication layer
+Here Frontend communicate with backend
+
+Technology
+axios
+fetch api
+
+
+
+

@@ -1,0 +1,14 @@
+API Integration
+We have made the frontend in two ways:-
+JFX
+React
+Depends upon your comfort
+
+#Assignment
+Make a proper documentation of HMS which should include the following things
+What is the first step you have taken
+which libraries package used
+how you have integrated the other required dependencies
+What is the folder structure
+The precise information regarding your data inside your file 
+

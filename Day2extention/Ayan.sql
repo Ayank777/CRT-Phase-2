@@ -9,4 +9,4 @@ CREATE TABLE patients (
     total_fee NUMBER
 );
 select * from patients;
-delete from patients where patient_id=2;
+delete from patients where patient_id=;
