@@ -12,3 +12,13 @@ how you have integrated the other required dependencies
 What is the folder structure
 The precise information regarding your data inside your file 
 
+Question
+How Spring automate the repetitive task
+
+Industry connection
+Companies now expect:
+API development
+Secure Applications
+Database Integration
+Deployment Understanding
+Team collaboration
