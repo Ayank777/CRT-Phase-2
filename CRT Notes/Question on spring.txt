@@ -1,0 +1,77 @@
+Question on spring??
+
+When we use spring what happens internally
+why did you choose this
+what breaks in production
+how do you optimize / debug it
+
+Spring core
+
+Why is constructor injection preferred over field injection ?
+Normal:-
+Immutability
+easier testing 
+
+Strong answer:-
+prevents circular dependency at startup
+objects become tread safe
+easier for unit testing without spring container
+field injection hides dependencies
+
+constructor injection vs field injection
+https://medium.com/@nikhilsalvi011/setter-vs-constructor-injection-c55d9434dc20
+
+What exactly happens when spring starts ?
+Spring creates the beans
+
+Spring Boot startup sequence:
+
+1. SpringApplication.run()
+2. Creates ApplicationContext
+3. Reads configuration
+4. Performs component scanning
+5. Creates Bean Definitions
+6. Resolves dependencies
+7. Applies BeanPostProcessors
+8. Initializes singleton beans
+9. Starts embedded server (Tomcat/Netty)
+
+Difference between BeanFactory and application context ? 
+
+How does @Autowired work internally ?
+
+How does Autoconfiguration works ?
+
+Difference between put and fetch ?
+
+How do you handle global exception handling ?
+
+What is N+1 theory problem ?
+
+Security
+
+What is the difference between authentication and autherisation ?
+
+Why JWT in microservices ?
+
+Why microservices fails in real companies ?
+
+What is the difference between Monolith and distributed Monolith ?
+
+Why API gateway ?
+
+What is circuit braker ?
+
+Product deeplevel
+
+How do you debug a high CPU in spring boot ?
+
+How do you secure secrets ?
+
+
+Hidden scenarios based Question
+
+Why is your application slow after deployment and fast in locally ?
+
+
+

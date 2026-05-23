@@ -1,14 +1,5 @@
-package hospitalbackend.entity;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-
-@Entity
-@Table(name = "PATIENTS")
 public class Patient {
 
-    @Id
     private int patientId;
 
     private String patientName;
@@ -35,31 +26,15 @@ public class Patient {
         return patientId;
     }
 
-    public void setPatientId(int patientId) {
-        this.patientId = patientId;
-    }
-
     public String getPatientName() {
         return patientName;
-    }
-
-    public void setPatientName(String patientName) {
-        this.patientName = patientName;
     }
 
     public int getDaysAdmitted() {
         return daysAdmitted;
     }
 
-    public void setDaysAdmitted(int daysAdmitted) {
-        this.daysAdmitted = daysAdmitted;
-    }
-
     public int getTotalFee() {
         return totalFee;
-    }
-
-    public void setTotalFee(int totalFee) {
-        this.totalFee = totalFee;
     }
 }

@@ -267,7 +267,6 @@ public class HospitalUI extends Application {
 
     try {
 
-        // Get Input Values
         int id =
                 Integer.parseInt(
                         idField.getText());
@@ -279,65 +278,29 @@ public class HospitalUI extends Application {
                 Integer.parseInt(
                         daysField.getText());
 
-        // Fee Calculation
         int totalFee =
                 days * 700;
 
-        // Database Connection
-        Connection con =
-                DatabaseConnection.connect();
+        Patient patient =
+                new Patient(
+                        id,
+                        name,
+                        days,
+                        totalFee);
 
-        // SQL Query
-        String query =
-                "INSERT INTO patients VALUES (?, ?, ?, ?)";
+        String response =
+                ApiService.addPatient(patient);
 
-        PreparedStatement pst =
-                con.prepareStatement(query);
-
-        // Set Values
-        pst.setInt(1, id);
-
-        pst.setString(2, name);
-
-        pst.setInt(3, days);
-
-        pst.setInt(4, totalFee);
-
-        // Execute Query
-        int rows =
-                pst.executeUpdate();
-
-        if (rows > 0) {
-
-            output.setText(
-                    "Patient Added Successfully\n\n"
-                    + "Total Fee: Rs. "
-                    + totalFee);
-
-        } else {
-
-            output.setText(
-                    "Failed To Add Patient");
-        }
-
-        // Close
-        pst.close();
-
-        con.close();
-
-        // Clear Fields
-        idField.clear();
-
-        nameField.clear();
-
-        daysField.clear();
+        output.setText(
+                "Patient Added Successfully\n\n"
+                + response);
 
     } catch (Exception ex) {
 
         ex.printStackTrace();
 
         output.setText(
-                "Database Error");
+                "Invalid Input");
     }
 });
 
