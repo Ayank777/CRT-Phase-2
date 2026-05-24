@@ -10,4 +10,3 @@ CREATE TABLE patients (
 );
 select * from patients;
 delete from patients where patient_id=;
-SELECT * FROM PATIENT;
