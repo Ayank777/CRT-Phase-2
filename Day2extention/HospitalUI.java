@@ -7,10 +7,14 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
+import javafx.scene.control.cell.PropertyValueFactory;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 
 // Abstract Class
 abstract class Hospital {
@@ -73,7 +77,6 @@ class HospitalManagement {
         }
     }
 
-    // Admit Patient
     String admitPatient(Room patient) {
 
         for (Bed bed : beds) {
@@ -82,23 +85,22 @@ class HospitalManagement {
 
                 bed.patient = patient;
 
-                return "SUCCESS: " +
-                        patient.patientName +
-                        " admitted to Bed " +
-                        bed.bedNumber;
+                return "SUCCESS: "
+                        + patient.patientName
+                        + " admitted to Bed "
+                        + bed.bedNumber;
             }
         }
 
         return "Hospital Full";
     }
 
-    // Search Patient
     String searchPatient(int patientId) {
 
         for (Bed bed : beds) {
 
-            if (!bed.isEmpty() &&
-                    bed.patient.patientId == patientId) {
+            if (!bed.isEmpty()
+                    && bed.patient.patientId == patientId) {
 
                 return "Patient Found\n\n"
                         + "Name: "
@@ -111,13 +113,12 @@ class HospitalManagement {
         return "Patient Not Found";
     }
 
-    // Discharge Patient
     String dischargePatient(int patientId, int days) {
 
         for (Bed bed : beds) {
 
-            if (!bed.isEmpty() &&
-                    bed.patient.patientId == patientId) {
+            if (!bed.isEmpty()
+                    && bed.patient.patientId == patientId) {
 
                 int fee =
                         bed.patient.calculateFee(days);
@@ -138,7 +139,6 @@ class HospitalManagement {
         return "Patient Not Found";
     }
 
-    // Display Status
     String displayStatus() {
 
         StringBuilder status =
@@ -160,8 +160,6 @@ class HospitalManagement {
 
                 status.append(
                         "Bed ")
-                        .append(bed.bedNumber)
-                        .append(" -> ")
                         .append(bed.patient.patientName)
                         .append("\n");
             }
@@ -209,15 +207,23 @@ public class HospitalUI extends Application {
 
         // Input Styling
         String inputStyle =
-                "-fx-font-size: 14px;" +
-                "-fx-background-radius: 10;" +
-                "-fx-padding: 10;";
+                "-fx-font-size: 14px;"
+                        + "-fx-background-radius: 10;"
+                        + "-fx-padding: 10;";
 
         idField.setStyle(inputStyle);
 
         nameField.setStyle(inputStyle);
 
         daysField.setStyle(inputStyle);
+
+        // Button Styling
+        String buttonStyle =
+                "-fx-background-color: #1565C0;"
+                        + "-fx-text-fill: white;"
+                        + "-fx-font-size: 14px;"
+                        + "-fx-background-radius: 12;"
+                        + "-fx-padding: 10 20 10 20;";
 
         // Buttons
         Button admitBtn =
@@ -232,13 +238,11 @@ public class HospitalUI extends Application {
         Button statusBtn =
                 new Button("Show Status");
 
-        // Button Styling
-        String buttonStyle =
-                "-fx-background-color: #1565C0;" +
-                "-fx-text-fill: white;" +
-                "-fx-font-size: 14px;" +
-                "-fx-background-radius: 12;" +
-                "-fx-padding: 10 20 10 20;";
+        Button loadBtn =
+                new Button("Load Patients");
+
+        Button deleteBtn =
+        new Button("Delete");
 
         admitBtn.setStyle(buttonStyle);
 
@@ -248,63 +252,105 @@ public class HospitalUI extends Application {
 
         statusBtn.setStyle(buttonStyle);
 
+        loadBtn.setStyle(buttonStyle);
+
+        deleteBtn.setStyle(buttonStyle);
+
         // Output Area
         TextArea output =
                 new TextArea();
 
         output.setEditable(false);
 
-        output.setPrefHeight(250);
+        output.setPrefHeight(150);
 
-        output.setStyle(
-                "-fx-font-size: 15px;" +
-                "-fx-control-inner-background: #F5F5F5;" +
-                "-fx-background-radius: 15;"
-        );
+        // TableView
+        TableView<Patient> table =
+                new TableView<>();
+
+        // ID Column
+        TableColumn<Patient, Integer> idColumn =
+                new TableColumn<>("ID");
+
+        idColumn.setCellValueFactory(
+                new PropertyValueFactory<>(
+                        "patientId"));
+
+        // Name Column
+        TableColumn<Patient, String> nameColumn =
+                new TableColumn<>("Name");
+
+        nameColumn.setCellValueFactory(
+                new PropertyValueFactory<>(
+                        "patientName"));
+
+        // Days Column
+        TableColumn<Patient, Integer> daysColumn =
+                new TableColumn<>("Days");
+
+        daysColumn.setCellValueFactory(
+                new PropertyValueFactory<>(
+                        "daysAdmitted"));
+
+        // Fee Column
+        TableColumn<Patient, Integer> feeColumn =
+                new TableColumn<>("Fee");
+
+        feeColumn.setCellValueFactory(
+                new PropertyValueFactory<>(
+                        "totalFee"));
+
+        table.getColumns().addAll(
+                idColumn,
+                nameColumn,
+                daysColumn,
+                feeColumn);
+
+        table.setPrefHeight(250);
 
         // Admit Button Action
         admitBtn.setOnAction(e -> {
 
-    try {
+            try {
 
-        int id =
-                Integer.parseInt(
-                        idField.getText());
+                int id =
+                        Integer.parseInt(
+                                idField.getText());
 
-        String name =
-                nameField.getText();
+                String name =
+                        nameField.getText();
 
-        int days =
-                Integer.parseInt(
-                        daysField.getText());
+                int days =
+                        Integer.parseInt(
+                                daysField.getText());
 
-        int totalFee =
-                days * 700;
+                int totalFee =
+                        days * 700;
 
-        Patient patient =
-                new Patient(
-                        id,
-                        name,
-                        days,
-                        totalFee);
+                Patient patient =
+                        new Patient(
+                                id,
+                                name,
+                                days,
+                                totalFee);
 
-        String response =
-                ApiService.addPatient(patient);
+                String response =
+                        ApiService.addPatient(patient);
 
-        output.setText(
-                "Patient Added Successfully\n\n"
-                + response);
+                output.setText(
+                        "Patient Added Successfully\n\n"
+                                + response);
 
-    } catch (Exception ex) {
+            } catch (Exception ex) {
 
-        ex.printStackTrace();
+                ex.printStackTrace();
 
-        output.setText(
-                "Invalid Input");
-    }
-});
+                output.setText(
+                        "Invalid Input");
+            }
+        });
 
-        // Search Button Action
+        // Search
         searchBtn.setOnAction(e -> {
 
             try {
@@ -320,12 +366,11 @@ public class HospitalUI extends Application {
 
             } catch (Exception ex) {
 
-                output.setText(
-                        "Invalid ID");
+                output.setText("Invalid ID");
             }
         });
 
-        // Discharge Button Action
+        // Discharge
         dischargeBtn.setOnAction(e -> {
 
             try {
@@ -339,7 +384,9 @@ public class HospitalUI extends Application {
                                 daysField.getText());
 
                 String result =
-                        hospital.dischargePatient(id, days);
+                        hospital.dischargePatient(
+                                id,
+                                days);
 
                 output.setText(result);
 
@@ -350,12 +397,60 @@ public class HospitalUI extends Application {
             }
         });
 
-        // Status Button Action
+        // Status
         statusBtn.setOnAction(e -> {
 
             output.setText(
                     hospital.displayStatus());
         });
+
+        // Load Patients
+        loadBtn.setOnAction(e -> {
+
+            try {
+
+                ObservableList<Patient> data =
+                        FXCollections.observableArrayList(
+                                ApiService.getPatients());
+
+                table.setItems(data);
+
+            } catch (Exception ex) {
+
+                ex.printStackTrace();
+
+                output.setText(
+                        "Failed To Load Patients");
+            }
+        });
+
+        deleteBtn.setOnAction(e -> {
+
+    try {
+
+        int id =
+                Integer.parseInt(
+                        idField.getText());
+
+        String response =
+                ApiService.deletePatient(id);
+
+        output.setText(response);
+
+        ObservableList<Patient> data =
+                FXCollections.observableArrayList(
+                        ApiService.getPatients());
+
+        table.setItems(data);
+
+    } catch (Exception ex) {
+
+        ex.printStackTrace();
+
+        output.setText(
+                "Delete Failed");
+    }
+});
 
         // Button Layout
         HBox buttonBox =
@@ -368,7 +463,9 @@ public class HospitalUI extends Application {
                 admitBtn,
                 searchBtn,
                 dischargeBtn,
-                statusBtn
+                statusBtn,
+                loadBtn,
+                deleteBtn
         );
 
         // Main Layout
@@ -391,12 +488,13 @@ public class HospitalUI extends Application {
                 nameField,
                 daysField,
                 buttonBox,
+                table,
                 output
         );
 
         // Scene
         Scene scene =
-                new Scene(root, 600, 550);
+                new Scene(root, 700, 650);
 
         stage.setTitle(
                 "Hospital Management System");

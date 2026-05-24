@@ -30,4 +30,13 @@ public class PatientController {
 
         return repo.findAll();
     }
+
+    @DeleteMapping("/{id}")
+    public String deletePatient(
+        @PathVariable int id) {
+
+            repo.deleteById(id);
+
+            return "Patient Deleted Successfully";
+        }
 }

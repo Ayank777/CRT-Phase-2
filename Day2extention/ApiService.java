@@ -87,5 +87,37 @@ public class ApiService {
             return null;
         }
     }
+
+    public static String deletePatient(
+        int id) {
+
+    try {
+
+        HttpClient client =
+                HttpClient.newHttpClient();
+
+        HttpRequest request =
+                HttpRequest.newBuilder()
+                        .uri(
+                                new URI(
+                                        API_URL + "/" + id))
+                        .DELETE()
+                        .build();
+
+        HttpResponse<String> response =
+                client.send(
+                        request,
+                        HttpResponse.BodyHandlers
+                                .ofString());
+
+        return response.body();
+
+    } catch (Exception e) {
+
+        e.printStackTrace();
+
+        return "Delete Failed";
+    }
+}
 }
 
