@@ -10,7 +10,7 @@ import com.google.gson.Gson;
 public class ApiService {
 
     private static final String API_URL =
-            "http://localhost:8080/patients";
+            "https://max-hospital.onrender.com/patients";
 
     public static String addPatient(
             Patient patient) {
