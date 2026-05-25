@@ -1,41 +1,28 @@
 package hospitalbackend.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
-@Table(name = "PATIENTS")
 public class Patient {
 
     @Id
-    private int patientId;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer patientId;
 
     private String patientName;
 
-    private int daysAdmitted;
+    private Integer daysAdmitted;
 
-    private int totalFee;
+    private Integer totalFee;
 
     public Patient() {
     }
 
-    public Patient(int patientId,
-                   String patientName,
-                   int daysAdmitted,
-                   int totalFee) {
-
-        this.patientId = patientId;
-        this.patientName = patientName;
-        this.daysAdmitted = daysAdmitted;
-        this.totalFee = totalFee;
-    }
-
-    public int getPatientId() {
+    public Integer getPatientId() {
         return patientId;
     }
 
-    public void setPatientId(int patientId) {
+    public void setPatientId(Integer patientId) {
         this.patientId = patientId;
     }
 
@@ -47,19 +34,19 @@ public class Patient {
         this.patientName = patientName;
     }
 
-    public int getDaysAdmitted() {
+    public Integer getDaysAdmitted() {
         return daysAdmitted;
     }
 
-    public void setDaysAdmitted(int daysAdmitted) {
+    public void setDaysAdmitted(Integer daysAdmitted) {
         this.daysAdmitted = daysAdmitted;
     }
 
-    public int getTotalFee() {
+    public Integer getTotalFee() {
         return totalFee;
     }
 
-    public void setTotalFee(int totalFee) {
+    public void setTotalFee(Integer totalFee) {
         this.totalFee = totalFee;
     }
 }

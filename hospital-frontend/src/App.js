@@ -2,13 +2,15 @@ import React, { useEffect, useState } from "react";
 
 function App() {
 
-  const [patients, setPatients] = useState([]);
+  const [patients, setPatients] =
+    useState([]);
 
-  const [patientId, setPatientId] = useState("");
+  const [patientName, setPatientName] =
+    useState("");
 
-  const [patientName, setPatientName] = useState("");
-
-  const [daysAdmitted, setDaysAdmitted] = useState("");
+  const [daysAdmitted,
+    setDaysAdmitted] =
+    useState("");
 
   const API_URL =
     "https://max-hospital.onrender.com/patients";
@@ -37,8 +39,6 @@ function App() {
 
     const patient = {
 
-      patientId: parseInt(patientId),
-
       patientName,
 
       daysAdmitted:
@@ -59,12 +59,12 @@ function App() {
             "application/json"
         },
 
-        body: JSON.stringify(patient)
+        body:
+          JSON.stringify(patient)
       });
 
       loadPatients();
 
-      setPatientId("");
       setPatientName("");
       setDaysAdmitted("");
 
@@ -122,16 +122,6 @@ function App() {
       >
 
         <input
-          type="number"
-          placeholder="Patient ID"
-          value={patientId}
-          onChange={(e) =>
-            setPatientId(
-              e.target.value
-            )}
-        />
-
-        <input
           type="text"
           placeholder="Patient Name"
           value={patientName}
@@ -139,9 +129,6 @@ function App() {
             setPatientName(
               e.target.value
             )}
-          style={{
-            marginLeft: "10px"
-          }}
         />
 
         <input
@@ -166,6 +153,15 @@ function App() {
           Admit
         </button>
 
+        <button
+          onClick={loadPatients}
+          style={{
+            marginLeft: "10px"
+          }}
+        >
+          Load Patients
+        </button>
+
       </div>
 
       <table
@@ -173,18 +169,25 @@ function App() {
         cellPadding="10"
         style={{
           background: "white",
-          width: "100%"
+          width: "100%",
+          borderCollapse: "collapse"
         }}
       >
 
         <thead>
 
           <tr>
+
             <th>ID</th>
+
             <th>Name</th>
+
             <th>Days</th>
+
             <th>Fee</th>
+
             <th>Action</th>
+
           </tr>
 
         </thead>
